@@ -1,0 +1,10 @@
+C:\Users\jerom\Desktop\IS_TFI_SPA\InfraestructuraTransversal\bin\Debug\netcoreapp3.1\InfraestructuraTransversal.deps.json
+C:\Users\jerom\Desktop\IS_TFI_SPA\InfraestructuraTransversal\bin\Debug\netcoreapp3.1\InfraestructuraTransversal.dll
+C:\Users\jerom\Desktop\IS_TFI_SPA\InfraestructuraTransversal\bin\Debug\netcoreapp3.1\InfraestructuraTransversal.pdb
+C:\Users\jerom\Desktop\IS_TFI_SPA\InfraestructuraTransversal\obj\Debug\netcoreapp3.1\InfraestructuraTransversal.csproj.AssemblyReference.cache
+C:\Users\jerom\Desktop\IS_TFI_SPA\InfraestructuraTransversal\obj\Debug\netcoreapp3.1\InfraestructuraTransversal.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jerom\Desktop\IS_TFI_SPA\InfraestructuraTransversal\obj\Debug\netcoreapp3.1\InfraestructuraTransversal.AssemblyInfoInputs.cache
+C:\Users\jerom\Desktop\IS_TFI_SPA\InfraestructuraTransversal\obj\Debug\netcoreapp3.1\InfraestructuraTransversal.AssemblyInfo.cs
+C:\Users\jerom\Desktop\IS_TFI_SPA\InfraestructuraTransversal\obj\Debug\netcoreapp3.1\InfraestructuraTransversal.csproj.CoreCompileInputs.cache
+C:\Users\jerom\Desktop\IS_TFI_SPA\InfraestructuraTransversal\obj\Debug\netcoreapp3.1\InfraestructuraTransversal.dll
+C:\Users\jerom\Desktop\IS_TFI_SPA\InfraestructuraTransversal\obj\Debug\netcoreapp3.1\InfraestructuraTransversal.pdb

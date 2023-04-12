@@ -1,0 +1,285 @@
+﻿@page
+@model CalzadosSPA.Pages.SupervisorDeCalidad.InspeccionarCalzadoModel
+@{
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
+<div class="col-12 justify-content-center mt-4 mb-2">
+    <a class="btn btn-primary w-100" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample" style="font-size:1.5em;">
+        Asociarse/Desasociarse a OP          <i class="fa fa-link"></i>
+    </a>
+</div>
+<div class="col-12 justify-content-lg-center collapse" id="collapseExample2">
+    <div class="row mt-3 justify-content-center">
+        @if (Model.OrdenDeProduccion is null)
+        {
+            @if (Model.LineasDisponibles.Count() == 0)
+            {
+                <h3 class="text-danger font-weight-bold">No hay líneas disponibles</h3>
+            }
+            else
+            {
+                <h5 class="font-weight-bold mr-4">Ingrese la línea a la que desea asociarse:</h5>
+                <select onchange="obtenerLineaSeleccionada()" id="lineasList" class="mr-3">
+                    <option selected="selected" disabled="disabled">N° línea</option>
+                    @foreach (var linea in Model.LineasDisponibles)
+                    {
+                        <option class="text-black-50 text-center">@linea.Numero</option>
+                    }
+                </select>
+                <form asp-page-handler="Asociar">
+                    <input hidden readonly asp-for="@Model.NumeroDeLinea" type="number" id="lineaSelect" />
+                    <button class="btn-success">Asociarse</button>
+                </form>
+            }
+        }
+        @if (Model.OrdenDeProduccion != null)
+        {
+            <form asp-page-handler="Desasociar">
+                <button class="btn-danger">Desasociarse</button>
+            </form>
+        }
+    </div>
+</div>
+
+
+<div class="col-12 justify-content-center mt-4 mb-2">
+    <a class="btn btn-primary w-100" data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample" style="font-size:1.5em;">
+        Inspeccionar calzados          <i class="fa fa-check"></i><i class="fa fa-times"></i>
+    </a>
+</div>
+@if (Model.OrdenDeProduccion != null)
+{
+    @if (Model.OrdenDeProduccion.InspeccionDetenida())
+    {
+        <h1 class="text-center text-danger">La OP se pausó debido a que uno de los semáforos está en rojo</h1>
+    }
+    @if (Model.NecesitaDesasociarse)
+    {
+        <h1 class="text-center text-danger">El turno en el que trabajaba ha finalizado. Debe desasociarse para continuar.</h1>
+    }
+    @if (Model.NecesitaDesasociarse is false && !Model.OrdenDeProduccion.InspeccionDetenida())
+    {
+        <div class="row mt-4" id="collapseExample3">
+            <div class="card col-12">
+                <div class="card-header text-center">
+                    <h2><b>INSPECCIÓN DE CALZADOS</b></h2>
+                    <div class="row justify-content-center mt-1">
+                        <h4 class="mr-5">N° OP: <b>@Model.OrdenDeProduccion.Numero</b></h4>
+                        <h4 class="mr-5">Modelo: <b>@Model.OrdenDeProduccion.Modelo.Denominacion</b></h4>
+                        <h4 class="mr-5">Color: <b>@Model.OrdenDeProduccion.Color.Descripcion</b></h4>
+                    </div>
+                </div>
+
+                <div class="row mt-3 justify-content-center text-center">
+                    @for (int i = (int)Model.OrdenDeProduccion.JornadaActual().Turno.HoraInicio;
+                          i <= Model.OrdenDeProduccion.JornadaActual().Turno.HoraFin; i++)
+                    {
+                        <div class="mr-3 bg-white">
+                            <button onclick="cambiarHora()" class="btnHora">
+                                <h5 class="font-weight-bold">@i:00</h5>
+                            </button>
+                        </div>
+                    }
+                </div>
+
+                <hr />
+
+                <div class="card-body text-center">
+
+                    <h3 class="text-center font-weight-bold">PARES DE PRIMERA</h3>
+                    <div class="row justify-content-center">
+                        <div class="input-group col-6">
+                            <form asp-page-handler="EliminarIncidencia">
+                                <span class="input-group-btn">
+                                    <button type="submit" onclick="confirm('¿Está seguro?')" class="btn btn-danger btn-number" style="font-size:2em;">
+                                        <i class="fa fa-minus-circle"></i>
+                                    </button>
+                                    <input hidden readonly class="inputHora" asp-for="HoraSeleccionada" />
+                                </span>
+                            </form>
+                            <input readonly type="number" placeholder="0" class="form-control text-center" style="font-size:2em;" id="totalParesPrimera">
+                            <form asp-page-handler="RegistrarIncidencia">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-success btn-number" style="font-size:2em;">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </button>
+                                    <input hidden readonly class="inputHora" asp-for="HoraSeleccionada" />
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-12 justify-content-center mt-5 mb-2">
+                        <a class="btn btn-primary w-100" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="font-size:1.5em;">
+                            Registrar defecto          <i class="fa fa-bug"></i>
+                        </a>
+                    </div>
+
+                    <div class="col-12 justify-content-lg-center collapse" id="collapseExample">
+                        <div class="row mt-4 justify-content-center">
+                            <div class="col-5">
+                                <button onclick="filtrarDefectosReproceso()" class="font-weight-bold" id="btnReproceso">
+                                    <h4>DEFECTOS DE REPROCESO</h4>
+                                </button>
+                            </div>
+                            <div class="col-5">
+                                <button onclick="filtrarDefectosObservado()" class="font-weight-bold" id="btnObservado">
+                                    <h4>DEFECTOS DE OBSERVADO</h4>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center mt-5 bg-secondary text-white">
+                            <div class="col-4">
+                                <h4 class="font-weight-bold">DEFECTO</h4>
+                            </div>
+                            <div class="col-4">
+                                <h4 class="font-weight-bold">IZQUIERDO</h4>
+                            </div>
+                            <div class="col-4">
+                                <h4 class="font-weight-bold">DERECHO</h4>
+                            </div>
+                        </div>
+                        @foreach (var defecto in Model.Defectos)
+                        {
+                            <div class="row justify-content-center text-center mt-4" style="display:none;">
+                                <div class="col-4" style="border: 2px solid black;">
+                                    <h4 class="font-weight-bold mt-2">@defecto.Descripcion</h4>
+                                    <span hidden class="tipoDefecto">@defecto.TipoDeDefecto</span>
+                                </div>
+
+                                <div class="input-group col-4">
+                                    <form asp-page-handler="EliminarIncidencia" class="formRegistrarDefecto">
+                                        <span class="input-group-btn">
+                                            <button type="submit" onclick="confirm('¿Está seguro?')" class="btn btn-danger btn-number" style="font-size:2em;">
+                                                <i class="fa fa-minus-circle"></i>
+                                            </button>
+                                            <input hidden readonly asp-for="DefectoSeleccionado" value="@defecto.Descripcion" placeholder="@defecto.Descripcion" />
+                                            <input hidden readonly class="inputHora" asp-for="HoraSeleccionada" />
+                                        </span>
+                                    </form>
+                                    <input readonly type="number" class="form-control text-center" style="font-size:2em;">
+                                    <form asp-page-handler="RegistrarIncidencia">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-success btn-number" style="font-size:2em;">
+                                                <i class="fa fa-plus-circle"></i>
+                                            </button>
+                                            <input hidden readonly asp-for="DefectoSeleccionado" value="@defecto.Descripcion" placeholder="@defecto.Descripcion" />
+                                            <input hidden readonly class="inputHora" asp-for="HoraSeleccionada" />
+                                        </span>
+                                    </form>
+                                </div>
+
+                                <div class="input-group col-4">
+                                    <form asp-page-handler="EliminarIncidencia">
+                                        <span class="input-group-btn">
+                                            <button type="submit" onclick="confirm('¿Está seguro?')" class="btn btn-danger btn-number" style="font-size:2em;">
+                                                <i class="fa fa-minus-circle"></i>
+                                            </button>
+                                            <input hidden readonly asp-for="DefectoSeleccionado" value="@defecto.Descripcion" placeholder="@defecto.Descripcion" />
+                                            <input hidden readonly class="inputHora" asp-for="HoraSeleccionada" />
+                                            <input hidden readonly value="1" placeholder="1" asp-for="PieSeleccionado" />
+                                        </span>
+                                    </form>
+                                    <input readonly type="number" class="form-control text-center" style="font-size:2em;">
+                                    <form asp-page-handler="RegistrarIncidencia">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-success btn-number" style="font-size:2em;">
+                                                <i class="fa fa-plus-circle"></i>
+                                            </button>
+                                            <input hidden readonly asp-for="DefectoSeleccionado" value="@defecto.Descripcion" placeholder="@defecto.Descripcion" />
+                                            <input hidden readonly class="inputHora" asp-for="HoraSeleccionada" />
+                                            <input hidden readonly value="1" placeholder="1" asp-for="PieSeleccionado" />
+                                        </span>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <h1 class="text-center text-danger">Usted no se encuentra trabajando en ninguna OP</h1>
+}
+
+
+
+<script>
+    function obtenerLineaSeleccionada() {
+        var lista = document.getElementById("lineasList");
+        var numero = lista.options[lista.selectedIndex].text;
+        document.getElementById("lineaSelect").value = numero;
+    }
+
+    function filtrarDefectosReproceso() {
+        var tipoDefecto = document.getElementsByClassName("tipoDefecto");
+
+        document.getElementById("btnReproceso").style = "background-color:silver";
+        document.getElementById("btnObservado").style = "background-color:#f0f0f0";
+
+        for (var i = 0; i < tipoDefecto.length; i++) {
+            var defecto = tipoDefecto[i].parentNode.parentNode;
+            if (tipoDefecto[i].textContent == "Observado") {
+                defecto.style = "display: none;"
+            } else {
+                defecto.style = "display: flex;"
+            }
+        }
+    }
+
+    function filtrarDefectosObservado() {
+        var tipoDefecto = document.getElementsByClassName("tipoDefecto");
+
+        document.getElementById("btnReproceso").style = "background-color:#f0f0f0";
+        document.getElementById("btnObservado").style = "background-color:silver";
+
+        for (var i = 0; i < tipoDefecto.length; i++) {
+            var defecto = tipoDefecto[i].parentNode.parentNode;
+            if (tipoDefecto[i].textContent == "Reproceso") {
+                defecto.style = "display: none;"
+            } else {
+                defecto.style = "display: flex;"
+            }
+        }
+    }
+
+    function cambiarHora() {
+        var inputHoras = document.getElementsByClassName("inputHora");
+        var buttons = document.getElementsByClassName('btnHora');
+
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener('click', function () {
+                this.style = "background-color: silver;"
+                var hora = this.textContent.split(':');
+                var horaInt = parseInt(hora[0]);
+                for (var j = 0; j < inputHoras.length; j++) {
+                    inputHoras[j].value = horaInt;
+                }
+                actualizarTotales(horaInt);
+            });
+            buttons[i].style = "background-color:#f0f0f0";
+        }
+    }
+
+    function actualizarTotales(horaInt) {
+        @*var total = @Model.Incidencias.Count(x => x.Defecto is null && x.HoraDeRegistro.Equals(Model.HoraSeleccionada));*@
+        var jsonVariable = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.TotalesPorHora)));
+        var totalPrimera = document.getElementById("totalParesPrimera");
+
+        for (var i = 0; i < jsonVariable.length; i++) {
+            var hora = parseInt(jsonVariable[i].Item1);
+            var total = parseInt(jsonVariable[i].Item2);
+            if (hora == horaInt){
+                totalPrimera.value = total;
+                break;
+            }
+            totalPrimera.value = 0;
+        }
+    }
+</script>

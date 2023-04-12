@@ -1,0 +1,202 @@
+﻿@page
+@model CalzadosSPA.Pages.SupervisorDeLinea.GestionarOrdenDeProduccionModel
+@using Dominio.Enumeraciones
+@{
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<link rel="stylesheet" href="~/css/myStyles.css">
+
+
+<div class="col-12 justify-content-center mt-5 mb-2">
+    <a class="btn btn-primary w-100" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="font-size:1.5em;">
+        Crear nueva orden de producción          <i class="fa fa-plus-circle"></i>
+    </a>
+</div>
+
+<div class="col-12 justify-content-lg-center collapse" id="collapseExample">
+    @if (Model.OrdenDeProduccion is null)
+    {
+        <div class="card" id="crearOP">
+            <div class="card-header">
+                <h6 class="form-select-lg text-right">Fecha de creación:    @System.DateTime.UtcNow</h6>
+            </div>
+            <div class="card-body">
+                <form asp-page-handler="post">
+
+                    <div class="mb-3">
+                        <label class="form-label">Numero de OP:</label>
+                        <input type="number" asp-for="NumeroOP" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Línea de trabajo:</label>
+                        <select class="form-select-md" onchange="obtenerLineaSeleccionada()" id="lineasList">
+                            <option selected="selected" disabled="disabled">Número de línea</option>
+                            @foreach (var linea in Model.Lineas)
+                            {
+                                <option asp-for="OrdenDeProduccion.Linea">@linea.Numero</option>
+                            }
+                        </select>
+                        <input hidden readonly asp-for="NumeroLinea" id="lineaSelect" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Modelo de calzado:
+                            <b id="modeloTag">No hay ninguno seleccionado</b>
+                        </label>
+                        <input type="text" id="myInput" onkeyup="filtroDinamico()" placeholder="Filtrar por denominación">
+                        <button class="btn-light" inert><i class="fa fa-search"></i></button>
+                        <table class="table table-bordered mt-1" id="tablaModelosOP">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th width="15%">SKU</th>
+                                    <th width="25%">Denominación</th>
+                                    <th width="15%">Lim. Rep. Inf.</th>
+                                    <th width="15%">Lim. Rep. Sup.</th>
+                                    <th width="15%">Lim. Obs. Inf.</th>
+                                    <th width="15%">Lim. Obs. Sup.</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myTBody">
+                                @foreach (var modelo in Model.Modelos)
+                                {
+                                    <tr onclick="obtenerModeloSeleccionado(this)">
+                                        <td>@modelo.SKU</td>
+                                        <td>@modelo.Denominacion</td>
+                                        <td>@modelo.LimiteInferiorReproceso</td>
+                                        <td>@modelo.LimiteSuperiorReproceso</td>
+                                        <td>@modelo.LimiteInferiorObservado</td>
+                                        <td>@modelo.LimiteSuperiorObservado</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <input hidden readonly asp-for="SKUModelo" id="modeloSelect" />
+                    </div>
+
+                    <div class="mb-3" asp-for="OrdenDeProduccion.Color">
+                        <label class="form-label">Color de calzado:</label>
+                        <select class="form-select-md" onchange="obtenerColorSeleccionado()" id="coloresList">
+                            <option selected="selected" disabled="disabled">Descripción del color</option>
+                            @foreach (var color in Model.Colores)
+                            {
+                                <option>@color.Descripcion</option>
+                            }
+                        </select>
+                        <input hidden readonly asp-for="DescripcionColor" id="colorSelect" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Estado de la OP:</label>
+                        <input readonly type="text" placeholder="ACTIVA" />
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <button type="submit" class="btn btn-success" id="btnConfirmar">Crear</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1 class="text-center" style="color:red;">Ya posee una orden de producción activa</h1>
+    }
+</div>
+
+
+<div class="col-12 justify-content-center mt-4 mb-2">
+    <a class="btn btn-primary w-100" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample" style="font-size:1.5em;">
+        Gestionar orden de producción actual          <i class="fa fa-clipboard"></i>
+    </a>
+</div>
+
+<div class="col-12 justify-content-lg-center collapse" id="collapseExample2">
+    @if (Model.OrdenDeProduccion != null)
+    {
+        <div class="mb-3">
+            <table class="table table-bordered mt-1 text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th width="11%">N° OP</th>
+                        <th width="16%">Creación</th>
+                        <th width="10%">Línea</th>
+                        <th width="21%">Modelo</th>
+                        <th width="16%">Color</th>
+                        <th width="16%">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.OrdenDeProduccion.Numero</td>
+                        <td>@Model.OrdenDeProduccion.FechaYHoraInicio</td>
+                        <td>@Model.OrdenDeProduccion.Linea.Numero</td>
+                        <td>@Model.OrdenDeProduccion.Modelo.Denominacion</td>
+                        <td>@Model.OrdenDeProduccion.Color.Descripcion</td>
+                        <td>@Model.OrdenDeProduccion.Estado</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row justify-content-center">
+                @if (Model.OrdenDeProduccion.Estado.Equals(Dominio.Enumeraciones.EstadoOP.Inciada))
+                {
+                    <form asp-page-handler="UpdateEstadoOP">
+                        <div class="mb-3 text-center">
+                            <input hidden asp-for="EstadoOP" value=1 />
+                            <button class="btn btn-warning w-100">Pausar OP</button>
+                        </div>
+                    </form>
+                }
+                else if (Model.OrdenDeProduccion.Estado.Equals(Dominio.Enumeraciones.EstadoOP.Pausada))
+                {
+                    <form asp-page-handler="UpdateEstadoOP">
+                        <div class="mb-3 text-center">
+                            <input hidden asp-for="EstadoOP" value=0 />
+                            <button class="btn btn-success w-100">Reanudar OP</button>
+                        </div>
+                    </form>
+                }
+                <form asp-page-handler="UpdateEstadoOP">
+                    <div class="mb-3 text-center ml-4">
+                        <input hidden asp-for="EstadoOP" value=2 />
+                        <button class="btn btn-danger w-100" onclick="confirm('¿Está seguro?')">Finalizar OP</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-6 text-center mt-3">
+                    <h3><b>SEMÁFORO DE REPROCESO</b></h3>
+                    <form asp-page-handler="ReiniciarSemaforo">
+                        <div class="mb-3 text-center ml-4">
+                            <input type="text" placeholder="Código de reinicio" asp-for="CodigoReinicio" />
+                            <button class="btn btn-success w-20">Confirmar</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-6 text-center mt-3">
+                    <h3><b>SEMÁFORO DE OBSERVADOS</b></h3>
+                    <form asp-page-handler="ReiniciarSemaforo">
+                        <div class="mb-3 text-center ml-4">
+                            <input type="text" placeholder="Código de reinicio" asp-for="CodigoReinicio" />
+                            <button class="btn btn-success w-20">Confirmar</button>
+                            <input hidden readonly asp-for="TipoDeSemaforo" value="1" placeholder="1" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    }
+    else
+    {
+        <h1 style="color:red; text-align:center;">No posee una orden de produccíón activa para gestionar</h1>
+    }
+</div>
+
+
+
+<script src="~/js/scriptGestionarOP.js"></script>

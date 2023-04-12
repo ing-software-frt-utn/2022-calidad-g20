@@ -1,0 +1,17 @@
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\bin\Debug\netcoreapp3.1\Negocio.deps.json
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\bin\Debug\netcoreapp3.1\Negocio.dll
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\bin\Debug\netcoreapp3.1\Negocio.pdb
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\bin\Debug\netcoreapp3.1\Datos.dll
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\bin\Debug\netcoreapp3.1\Dominio.dll
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\bin\Debug\netcoreapp3.1\Datos.pdb
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\bin\Debug\netcoreapp3.1\Dominio.pdb
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\obj\Debug\netcoreapp3.1\Negocio.csproj.AssemblyReference.cache
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\obj\Debug\netcoreapp3.1\Negocio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\obj\Debug\netcoreapp3.1\Negocio.AssemblyInfoInputs.cache
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\obj\Debug\netcoreapp3.1\Negocio.AssemblyInfo.cs
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\obj\Debug\netcoreapp3.1\Negocio.csproj.CoreCompileInputs.cache
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\obj\Debug\netcoreapp3.1\Negocio.csproj.CopyComplete
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\obj\Debug\netcoreapp3.1\Negocio.dll
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\obj\Debug\netcoreapp3.1\Negocio.pdb
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\bin\Debug\netcoreapp3.1\InfraestructuraTransversal.dll
+C:\Users\jerom\Desktop\IS_TFI_SPA\Negocio\bin\Debug\netcoreapp3.1\InfraestructuraTransversal.pdb

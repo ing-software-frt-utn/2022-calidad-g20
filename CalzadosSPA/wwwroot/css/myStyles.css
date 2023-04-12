@@ -1,0 +1,29 @@
+﻿#btnConfirmar, #btnBorrar, #btnActualizar{
+    width: 30%;
+}
+
+#crearOP form div input, #crearOP form div select {
+    width: 65%;
+    float: right;
+}
+
+#crearOP form div #myInput {
+    float: none;
+    width: 95%;
+}
+
+#crearOP input, #crearOP label, #crearOP select {
+    font-size: 1.05em;
+}
+
+#tablaModelosOP tbody tr:hover, #tablaModelos tbody tr:hover{
+    background-color: lightgray;
+    font-size: 1.1em;
+}
+
+#tablaModelosOP {
+    height: 275px;
+    display:block;
+    overflow-y: scroll;
+    text-align:center;
+}

@@ -1,0 +1,16 @@
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\bin\Debug\netcoreapp3.1\Datos.deps.json
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\bin\Debug\netcoreapp3.1\Datos.runtimeconfig.json
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\bin\Debug\netcoreapp3.1\Datos.runtimeconfig.dev.json
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\bin\Debug\netcoreapp3.1\Datos.dll
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\bin\Debug\netcoreapp3.1\Datos.pdb
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\bin\Debug\netcoreapp3.1\Dominio.dll
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\bin\Debug\netcoreapp3.1\Dominio.pdb
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\obj\Debug\netcoreapp3.1\Datos.csproj.AssemblyReference.cache
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\obj\Debug\netcoreapp3.1\Datos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\obj\Debug\netcoreapp3.1\Datos.AssemblyInfoInputs.cache
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\obj\Debug\netcoreapp3.1\Datos.AssemblyInfo.cs
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\obj\Debug\netcoreapp3.1\Datos.csproj.CoreCompileInputs.cache
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\obj\Debug\netcoreapp3.1\Datos.csproj.CopyComplete
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\obj\Debug\netcoreapp3.1\Datos.dll
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\obj\Debug\netcoreapp3.1\Datos.pdb
+C:\Users\jerom\Desktop\IS_TFI_SPA\Datos\obj\Debug\netcoreapp3.1\Datos.genruntimeconfig.cache

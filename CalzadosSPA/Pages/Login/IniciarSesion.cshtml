@@ -1,0 +1,49 @@
+﻿@page
+@model CalzadosSPA.Pages.Administrativo.IniciarSesionModel
+@{
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm12 col-md-12 col-lg-6">
+
+            <div class="mt-3" style="text-align:center;">
+                <h2 class="mb-4">Autenticación de empleado</h2>
+                <i class="fa fa-user fa-8x"></i>
+            </div>
+
+            <form method="post" class="mt-5">
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="Empleado.Usuario"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" asp-for="Empleado.Usuario" class="form-control" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="Empleado.Usuario"></span>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="Empleado.Contrasena"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="password" asp-for="Empleado.Contrasena" class="form-control" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="Empleado.Contrasena"></span>
+                </div>
+
+                <div class="mt-4" style="text-align:center;">
+                    <button type="submit" class="col-3 btn btn-outline-success text-center">Iniciar sesión</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
